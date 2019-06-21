@@ -263,8 +263,8 @@
     subjects_:: [],
     subjects: [{
       kind: o.kind,
-      namespace: o.metadata.namespace,
       name: o.metadata.name,
+      [if role_binding.kind == 'RoleBinding' then 'namespace']: o.metadata.namespace,
     } for o in self.subjects_],
 
     roleRef_:: error 'roleRef is required',
@@ -330,7 +330,9 @@
 
   User(name): {
     kind: 'User',
-    name: name,
     apiGroup: 'rbac.authorization.k8s.io',
+    metadata: {
+      name: name,
+    },
   },
 }
