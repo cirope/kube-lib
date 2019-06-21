@@ -155,7 +155,7 @@
     apiGroup: 'rbac.authorization.k8s.io',
   },
 
-  Ingress(name): $._Object('extensions/v1beta1', 'Ingress', name) {
+  Ingress(name): $._Object('networking.k8s.io/v1beta1', 'Ingress', name) {
     assert std.length(rel_paths) == 0 : 'paths must be absolute: ' + rel_paths,
 
     local rel_paths = [
