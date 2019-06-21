@@ -263,8 +263,8 @@
     subjects_:: [],
     subjects: [{
       kind: o.kind,
-      name: o.name,
-      apiGroup: o.apiGroup,
+      namespace: o.metadata.namespace,
+      name: o.metadata.name,
     } for o in self.subjects_],
 
     roleRef_:: error 'roleRef is required',
@@ -323,6 +323,9 @@
       ],
       type: 'ClusterIP',
     },
+  },
+
+  ServiceAccount(name): $._Object('v1', 'ServiceAccount', name) {
   },
 
   User(name): {
