@@ -328,11 +328,12 @@
   ServiceAccount(name): $._Object('v1', 'ServiceAccount', name) {
   },
 
-  User(name): {
+  User(name, namespace=null): {
     kind: 'User',
     apiGroup: 'rbac.authorization.k8s.io',
     metadata: {
       name: name,
+      [if namespace != null then 'namespace']: namespace,
     },
   },
 }
