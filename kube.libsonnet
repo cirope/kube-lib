@@ -149,6 +149,21 @@
     },
   },
 
+  HorizontalPodAutoscaler(name): $._Object('autoscaling/v1', 'HorizontalPodAutoscaler', name) {
+    local hpa = self,
+
+    target:: error 'target required',
+
+    spec: {
+      assert self.maxReplicas >= self.minReplicas,
+
+      scaleTargetRef: $.CrossVersionObjectReference(hpa.target),
+
+      minReplicas: hpa.target.spec.replicas,
+      maxReplicas: error 'maxReplicas required',
+    },
+  },
+
   Group(name): {
     kind: 'Group',
     name: name,
