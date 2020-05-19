@@ -149,6 +149,12 @@
     },
   },
 
+  CrossVersionObjectReference(target): {
+    apiVersion: target.apiVersion,
+    kind: target.kind,
+    name: target.metadata.name,
+  },
+
   HorizontalPodAutoscaler(name): $._Object('autoscaling/v1', 'HorizontalPodAutoscaler', name) {
     local hpa = self,
 
