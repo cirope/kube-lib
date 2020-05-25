@@ -99,6 +99,51 @@
     volumeMounts: $.mapToNamedList(self.volumeMounts_),
   },
 
+  Job(name): $._Object('batch/v1', 'Job', name) {
+    local job = self,
+
+    spec: $.JobSpec {
+      template+: {
+        metadata+: {
+          labels: job.metadata.labels,
+        },
+      },
+    },
+  },
+
+  CronJob(name): $._Object('batch/v1beta1', 'CronJob', name) {
+    local cronjob = self,
+
+    spec: {
+      jobTemplate: {
+        spec: $.JobSpec {
+          template+: {
+            metadata+: {
+              labels: cronjob.metadata.labels,
+            },
+          },
+        },
+      },
+      schedule: error 'Need to provide spec.schedule',
+      successfulJobsHistoryLimit: 10,
+      failedJobsHistoryLimit: 20,
+      // NB: upstream concurrencyPolicy default is "Allow"
+      concurrencyPolicy: 'Forbid',
+    },
+  },
+
+  JobSpec: {
+    local this = self,
+
+    template: {
+      spec: $.PodSpec {
+        restartPolicy: 'OnFailure',
+      },
+    },
+    completions: 1,
+    parallelism: 1,
+  },
+
   DaemonSet(name): $._Object('apps/v1', 'DaemonSet', name) {
     local daemon_set = self,
 
