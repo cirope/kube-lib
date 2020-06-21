@@ -12,4 +12,8 @@ local kube = import 'kube.libsonnet';
       domains: cert.domains_,
     },
   },
+
+  BackendConfig(name): kube._Object('cloud.google.com/v1', 'BackendConfig', name) {
+    spec: {},
+  },
 }
