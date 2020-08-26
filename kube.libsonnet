@@ -330,7 +330,7 @@
     subjects: [{
       kind: o.kind,
       name: o.metadata.name,
-      [if role_binding.kind == 'RoleBinding' then 'namespace']: o.metadata.namespace,
+      [if std.member(['RoleBinding', 'ClusterRoleBinding'], role_binding.kind) then 'namespace']: o.metadata.namespace,
     } for o in self.subjects_],
 
     roleRef_:: error 'roleRef is required',
